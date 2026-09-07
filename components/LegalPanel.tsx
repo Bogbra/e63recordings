@@ -62,10 +62,6 @@ export function LegalPanel({ type, locale, onClose }: LegalPanelProps) {
               {dict.imprint.email}: <a href={`mailto:${site.email}`}>{site.email}</a><br />
               {dict.imprint.website}: {site.website}
             </p>
-            <p>
-              <strong>{dict.imprint.registerTitle}</strong><br />
-              {dict.imprint.registerText}
-            </p>
           </div>
         ) : (
           <div className="legalContent">

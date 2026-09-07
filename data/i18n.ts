@@ -65,8 +65,6 @@ export type Dictionary = {
       phone: string;
       email: string;
       website: string;
-      registerTitle: string;
-      registerText: string;
     };
     privacy: {
       eyebrow: string;
@@ -172,9 +170,6 @@ export const dictionaries: Record<Locale, Dictionary> = {
         phone: "Telefon",
         email: "E-Mail",
         website: "Website",
-        registerTitle: "Register / Umsatzsteuer",
-        registerText:
-          "Falls eine Registereintragung, USt-IdNr. oder Wirtschafts-IdNr. besteht, hier vor Veröffentlichung ergänzen.",
       },
       privacy: {
         eyebrow: "Rechtliches / 02",
@@ -280,9 +275,6 @@ export const dictionaries: Record<Locale, Dictionary> = {
         phone: "Phone",
         email: "Email",
         website: "Website",
-        registerTitle: "Register / VAT",
-        registerText:
-          "If a commercial register entry, VAT ID, or tax ID applies, add it here before publishing.",
       },
       privacy: {
         eyebrow: "Legal / 02",
