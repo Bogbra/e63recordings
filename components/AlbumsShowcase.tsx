@@ -4,6 +4,7 @@ import { CSSProperties, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { site } from "@/data/site";
+import { ArrowIcon } from "./ArrowIcon";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -270,7 +271,7 @@ export function AlbumsShowcase({ dict }: { dict: AlbumsDict }) {
             <span id="albumNum">{release.num}</span>
           </span>
           <a href={release.href} target="_blank" rel="noreferrer" className="albums__link">
-            {dict.link}
+            {dict.link} <ArrowIcon />
           </a>
         </div>
 

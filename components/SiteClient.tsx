@@ -7,6 +7,7 @@ import { Logo } from "./Logo";
 import { LegalPanel } from "./LegalPanel";
 import { CoverArt } from "./CoverArt";
 import { AlbumsShowcase } from "./AlbumsShowcase";
+import { ArrowIcon } from "./ArrowIcon";
 import { site, artists } from "@/data/site";
 import { getDictionary, type Locale } from "@/data/i18n";
 
@@ -52,8 +53,8 @@ export function SiteClient({ locale }: { locale: Locale }) {
             ))}
           </div>
           <div className="menuFoot">
-            <a href={site.instagram} target="_blank" rel="noreferrer">Instagram ↗</a>
-            <a href={site.bandcamp} target="_blank" rel="noreferrer">Bandcamp ↗</a>
+            <a href={site.instagram} target="_blank" rel="noreferrer">Instagram <ArrowIcon /></a>
+            <a href={site.bandcamp} target="_blank" rel="noreferrer">Bandcamp <ArrowIcon /></a>
           </div>
         </div>
       </nav>
@@ -77,7 +78,9 @@ export function SiteClient({ locale }: { locale: Locale }) {
                 </span>
               ))}
             </p>
-            <a href="#latest" className="circleLink" aria-label={dict.hero.scrollAria}>↓</a>
+            <a href="#latest" className="circleLink" aria-label={dict.hero.scrollAria}>
+              <ArrowIcon direction="down" />
+            </a>
           </div>
         </section>
 
@@ -130,7 +133,7 @@ export function SiteClient({ locale }: { locale: Locale }) {
                   <p>{dict.artists.bios[artist.id]}</p>
                   {artist.instagram && (
                     <a href={artist.instagram} target="_blank" rel="noreferrer" className="artistLink">
-                      Instagram ↗
+                      Instagram <ArrowIcon />
                     </a>
                   )}
                 </div>
@@ -167,7 +170,7 @@ export function SiteClient({ locale }: { locale: Locale }) {
               <p>{dict.demos.copy}</p>
               <p className="demoCopy__secondary">{dict.demos.copy2}</p>
               <a className="bigButton" href={`mailto:${site.email}?subject=E63%20Demo%20Submission`}>
-                {dict.demos.cta}
+                {dict.demos.cta} <ArrowIcon />
               </a>
             </div>
           </div>
@@ -182,9 +185,9 @@ export function SiteClient({ locale }: { locale: Locale }) {
           <div className="contactFoot">
             <a href={`mailto:${site.email}`}>{site.email}</a>
             <div className="socialLinks">
-              <a href={site.instagram} target="_blank" rel="noreferrer">Instagram ↗</a>
-              <a href={site.facebook} target="_blank" rel="noreferrer">Facebook ↗</a>
-              <a href={site.bandcamp} target="_blank" rel="noreferrer">Bandcamp ↗</a>
+              <a href={site.instagram} target="_blank" rel="noreferrer">Instagram <ArrowIcon /></a>
+              <a href={site.facebook} target="_blank" rel="noreferrer">Facebook <ArrowIcon /></a>
+              <a href={site.bandcamp} target="_blank" rel="noreferrer">Bandcamp <ArrowIcon /></a>
             </div>
           </div>
         </section>

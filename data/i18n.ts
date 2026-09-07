@@ -67,7 +67,6 @@ export type Dictionary = {
       title: string;
       intro: string;
       represented: string;
-      phone: string;
       email: string;
       website: string;
     };
@@ -124,7 +123,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     },
     albums: {
       topline: "Ausgewählte Veröffentlichungen",
-      link: "Anhören / Kaufen ↗",
+      link: "Anhören / Kaufen",
       scroll: "Scrollen",
     },
     about: {
@@ -159,7 +158,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       heading: ["Für deine", "Demo:"],
       copy: "Am liebsten hören wir deine Musik über einen privaten Streaming-Link, zum Beispiel SoundCloud. Schreib uns ein paar Worte zu dir und deinem Projekt und schick uns Musik, die schon weitgehend fertig ist. Mehr braucht es eigentlich nicht.",
       copy2: "P.S.: Deine Follower-Zahl ist uns egal. Wenn uns deine Musik überzeugt, zählt genau das.",
-      cta: "Demo einreichen ↗",
+      cta: "Demo einreichen",
     },
     contact: {
       eyebrow: "Kontakt / Booking / Demos",
@@ -176,7 +175,6 @@ export const dictionaries: Record<Locale, Dictionary> = {
         title: "Impressum",
         intro: "Angaben gemäß § 5 DDG",
         represented: "Vertreten durch",
-        phone: "Telefon",
         email: "E-Mail",
         website: "Website",
       },
@@ -233,7 +231,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     },
     albums: {
       topline: "Selected releases",
-      link: "Listen / Buy ↗",
+      link: "Listen / Buy",
       scroll: "Scroll",
     },
     about: {
@@ -268,7 +266,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
       heading: ["For your", "Demo:"],
       copy: "We’d love to hear your music via a private streaming link, for example SoundCloud. Write us a few words about you and your project, and send music that’s already largely finished. That’s really all it takes.",
       copy2: "P.S.: We don’t care about your follower count. If your music convinces us, that’s all that matters.",
-      cta: "Submit a demo ↗",
+      cta: "Submit a demo",
     },
     contact: {
       eyebrow: "Contact / Booking / Demos",
@@ -285,7 +283,6 @@ export const dictionaries: Record<Locale, Dictionary> = {
         title: "Imprint",
         intro: "Information according to § 5 DDG (German Digital Services Act)",
         represented: "Represented by",
-        phone: "Phone",
         email: "Email",
         website: "Website",
       },
