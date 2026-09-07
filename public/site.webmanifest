@@ -1,0 +1,8 @@
+{
+  "name": "E63 Recordings",
+  "short_name": "E63",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a"
+}

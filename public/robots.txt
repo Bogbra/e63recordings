@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://e63recordings.com/sitemap.xml
