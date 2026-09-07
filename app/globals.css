@@ -59,8 +59,16 @@ button { font: inherit; color: inherit; }
   font-size: 12px;
   letter-spacing: .04em;
 }
-.logo { display: inline-flex; align-items: baseline; gap: 7px; text-transform: uppercase; white-space: nowrap; }
-.logoMark { font-weight: 900; letter-spacing: -.08em; font-size: 20px; }
+.logo { display: inline-flex; align-items: center; gap: 7px; text-transform: uppercase; white-space: nowrap; }
+.logoMark {
+  display: inline-block;
+  height: 40px;
+  width: 52.7px;
+  background-image: url('/e63-logo-white.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
 .logoWord { font-size: 11px; letter-spacing: .06em; }
 
 .siteMenu {
@@ -98,7 +106,7 @@ section { position: relative; }
 
 .hero {
   min-height: 100svh;
-  padding: 90px var(--pad) 24px;
+  padding: 90px var(--pad) 56px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -129,9 +137,8 @@ section { position: relative; }
   mix-blend-mode: screen;
 }
 @keyframes pulse { to { transform: scale(1.08) rotate(8deg); } }
-.heroMeta { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; font-size: 10px; text-transform: uppercase; }
-.heroMeta span:nth-child(2) { text-align: center; }
-.heroMeta span:nth-child(3) { text-align: right; }
+.heroMeta { position: relative; z-index: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; font-size: 10px; text-transform: uppercase; }
+.heroMeta span:last-child { text-align: right; }
 .heroTitleWrap {
   position: relative;
   z-index: 1;
@@ -156,7 +163,7 @@ section { position: relative; }
   white-space: nowrap;
 }
 .heroBottom { position: relative; z-index: 1; margin-top: auto; display: flex; align-items: end; justify-content: space-between; gap: 20px; }
-.heroBottom p { margin: 0; max-width: 550px; font-size: clamp(18px, 2vw, 30px); letter-spacing: -.03em; }
+.heroBottom p { margin: 0; font-size: clamp(18px, 2vw, 30px); letter-spacing: -.03em; }
 .circleLink { width: 58px; height: 58px; border: 1px solid currentColor; border-radius: 50%; display: grid; place-items: center; font-size: 22px; transition: .25s; }
 .circleLink:hover { background: var(--acid); color: var(--ink); border-color: var(--acid); transform: translateY(4px); }
 
@@ -217,14 +224,15 @@ section { position: relative; }
 .soundCardText span { font-size:11px; }
 .soundCardText h3 { margin:0; font-size:clamp(38px,5vw,76px); line-height:.9; letter-spacing:-.055em; }
 .soundCardText p { grid-column:2; max-width:560px; font-size:18px; color:#bfbfb8; }
+.artistLink { grid-column:2; width:max-content; margin-top:14px; font-size:12px; text-transform:uppercase; letter-spacing:.04em; color:inherit; text-decoration:none; border-bottom:1px solid var(--line-inverse); padding-bottom:2px; transition:opacity .2s; }
+.artistLink:hover { opacity:.65; }
 
 .demos { padding: 110px var(--pad) 150px; }
 .demoGrid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(30px,7vw,120px); }
 .demoGrid h2 { margin:30px 0 0; font-size:clamp(72px,11vw,170px); line-height:.82; letter-spacing:-.07em; text-transform:uppercase; }
 .demoCopy { padding-top: 38px; }
 .demoCopy > p { margin-top:0; max-width:690px; font-size:clamp(24px,3vw,46px); letter-spacing:-.04em; }
-.demoRules { margin:70px 0; border-top:1px solid var(--ink); }
-.demoRules span { display:block; border-bottom:1px solid var(--ink); padding:10px 0; text-transform:uppercase; font-size:12px; }
+.demoCopy__secondary { max-width:560px; font-size:clamp(16px,1.6vw,20px) !important; letter-spacing:-.01em !important; color:rgba(10,10,10,.68); margin:30px 0 70px !important; }
 .bigButton { display:inline-flex; align-items:center; justify-content:space-between; width:100%; min-height:86px; padding:0 20px; border:1px solid var(--ink); text-transform:uppercase; font-size:20px; transition:.25s; }
 .bigButton:hover { background:var(--ink); color:#fff; }
 
@@ -256,8 +264,6 @@ section { position: relative; }
   .headerMeta { display:none; }
   .hero { min-height: 100svh; }
   .hero::before { width:110vw; right:-55vw; top:18vh; }
-  .heroMeta { grid-template-columns:1fr 1fr; }
-  .heroMeta span:nth-child(2) { display:none; }
   .heroTitleWrap { margin-left:-4px; }
   .heroLine--e63 { font-size:clamp(132px,44vw,300px); line-height:.8; letter-spacing:-.052em; }
   .heroLine--recordings { margin-top:10px; font-size:clamp(38px,13vw,90px); line-height:.84; letter-spacing:-.045em; }
@@ -335,7 +341,7 @@ section { position: relative; }
 
 .albums__vinyl {
   position: absolute;
-  inset: 6%;
+  inset: 0;
   z-index: 0;
   border-radius: 50%;
   background:

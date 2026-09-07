@@ -13,37 +13,45 @@ type Release = {
   artist: string;
   catalogue: string;
   href: string;
+  cover?: string;
   palette: [string, string, string];
   motif: "rings" | "slash" | "grid";
 };
 
+// Newest catalogue number first — matches the physical "new releases"
+// shelf order and the carousel's scroll direction.
 const releases: Release[] = [
+  {
+    num: "06",
+    title: "Feel the High",
+    artist: "Theo Schmitt & Karibik Joe",
+    catalogue: "E63NR06",
+    href: site.bandcamp,
+    cover: "/feel-the-high-cover.webp",
+    palette: ["#1a1204", "#f5f4ef", "#EFC639"],
+    motif: "rings",
+  },
   {
     num: "05",
     title: "Turbo Evolution",
     artist: "Theo Schmitt",
     catalogue: "E63NR05",
-    href: site.latestRelease.buyUrl,
-    palette: ["#070707", "#dfff00", "#2f3321"],
+    href: site.bandcamp,
+    cover: "/turbo-evolution-cover.webp",
+    palette: ["#070707", "#dfff00", "#fff"],
     motif: "rings",
   },
   {
+    // The vinyl's B-side ("Take That") isn't a separate catalogue entry —
+    // same record, so it lives under this one release.
     num: "04",
     title: "Joy",
     artist: "Theo Schmitt",
-    catalogue: "E63 RECORDINGS",
+    catalogue: "E63NR04",
     href: site.bandcamp,
-    palette: ["#ecebe5", "#090909", "#dfff00"],
+    cover: "/joy-cover.webp",
+    palette: ["#ecebe5", "#090909", "#000"],
     motif: "slash",
-  },
-  {
-    num: "03",
-    title: "Take That",
-    artist: "Theo Schmitt",
-    catalogue: "E63 RECORDINGS",
-    href: site.bandcamp,
-    palette: ["#090909", "#deddd5", "#dfff00"],
-    motif: "grid",
   },
 ];
 
@@ -153,7 +161,7 @@ export function AlbumsShowcase({ dict }: { dict: AlbumsDict }) {
   const [sleeves, setSleeves] = useState<string[]>([]);
 
   useEffect(() => {
-    setSleeves(releases.map(drawSleeveImage));
+    setSleeves(releases.map((release, i) => release.cover ?? drawSleeveImage(release, i)));
   }, []);
 
   useEffect(() => {
@@ -162,46 +170,53 @@ export function AlbumsShowcase({ dict }: { dict: AlbumsDict }) {
 
     let active = 0;
 
+    function applyLayout(position: number) {
+      const rounded = Math.round(position);
+      if (rounded !== active) {
+        active = rounded;
+        setActiveIndex(rounded);
+      }
+
+      releases.forEach((_, i) => {
+        const item = itemRefs.current[i];
+        const vinyl = vinylRefs.current[i];
+        if (!item || !vinyl) return;
+
+        const offset = i - position;
+        const absOffset = Math.abs(offset);
+
+        gsap.set(item, {
+          xPercent: offset * 165,
+          rotateY: gsap.utils.clamp(-55, 55, offset * -42),
+          scale: 1 - Math.min(absOffset, 1.5) * 0.14,
+          opacity: gsap.utils.clamp(0.08, 1, 1 - absOffset * 0.7),
+          zIndex: Math.round(50 - absOffset * 10),
+        });
+
+        const bump = gsap.utils.clamp(0, 1, 1 - absOffset);
+
+        gsap.set(vinyl, {
+          xPercent: bump * 55,
+          scale: 0.86 + bump * 0.05,
+          rotate: position * 300,
+          opacity: 0.3 + bump * 0.7,
+        });
+      });
+    }
+
+    // Apply the resting (scroll-progress 0) layout synchronously, right
+    // after mount, so the very first paint already shows the correct
+    // spread-out order — otherwise the items sit stacked at their default
+    // position (last one in the DOM on top) until ScrollTrigger's onUpdate
+    // fires on the next scroll/ticker frame.
+    applyLayout(0);
+
     const trigger = ScrollTrigger.create({
       trigger: section,
       start: "top top",
       end: "bottom bottom",
       scrub: 0.4,
-      onUpdate: (self) => {
-        const position = self.progress * (releases.length - 1);
-
-        const rounded = Math.round(position);
-        if (rounded !== active) {
-          active = rounded;
-          setActiveIndex(rounded);
-        }
-
-        releases.forEach((_, i) => {
-          const item = itemRefs.current[i];
-          const vinyl = vinylRefs.current[i];
-          if (!item || !vinyl) return;
-
-          const offset = i - position;
-          const absOffset = Math.abs(offset);
-
-          gsap.set(item, {
-            xPercent: offset * 165,
-            rotateY: gsap.utils.clamp(-55, 55, offset * -42),
-            scale: 1 - Math.min(absOffset, 1.5) * 0.14,
-            opacity: gsap.utils.clamp(0.08, 1, 1 - absOffset * 0.7),
-            zIndex: Math.round(50 - absOffset * 10),
-          });
-
-          const bump = gsap.utils.clamp(0, 1, 1 - absOffset);
-
-          gsap.set(vinyl, {
-            xPercent: bump * 55,
-            scale: 0.86 + bump * 0.05,
-            rotate: position * 300,
-            opacity: 0.3 + bump * 0.7,
-          });
-        });
-      },
+      onUpdate: (self) => applyLayout(self.progress * (releases.length - 1)),
     });
 
     return () => trigger.kill();

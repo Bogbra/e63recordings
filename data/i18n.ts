@@ -40,11 +40,16 @@ export type Dictionary = {
     heading: string[];
     bios: Record<"theo" | "joe", string>;
   };
+  join: {
+    eyebrow: string;
+    statement: string;
+    paragraphs: string[];
+  };
   demos: {
     eyebrow: string;
     heading: string[];
     copy: string;
-    rules: string[];
+    copy2: string;
     cta: string;
   };
   contact: {
@@ -92,13 +97,13 @@ export type Dictionary = {
 export const dictionaries: Record<Locale, Dictionary> = {
   de: {
     meta: {
-      title: "E63 Recordings — Frankfurt",
+      title: "E63 Recordings — Elsenfeld",
       description:
-        "E63 Recordings ist ein unabhängiges Electronic-Music-Label, gegründet 2020 in Frankfurt am Main, mit Fokus auf Dancefloor-Elektronik und melodischen Ambient.",
-      ogDescription: "Elektronische Musik für den Dancefloor und melodische Ambient-Räume.",
+        "E63 Recordings ist ein unabhängiges Electronic-Music-Label, gegründet 2020 in Elsenfeld, mit Fokus auf Dancefloor.",
+      ogDescription: "Elektronische Musik mit Fokus auf den Dancefloor",
     },
     header: {
-      tagline: "Frankfurt am Main · Gegründet 2020",
+      tagline: "Elsenfeld - gegründet 2020",
       menuOpen: "Menü",
       menuClose: "Schließen",
     },
@@ -113,8 +118,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
       ],
     },
     hero: {
-      kicker: "Unabhängiges Electronic-Label",
-      copy: "Elektronische Musik für den Dancefloor\nund melodische Ambient-Räume.",
+      kicker: "Unabhängiges Electronic Music Label",
+      copy: "Elektronische Musik mit Fokus auf den Dancefloor",
       scrollAria: "Zu den neuesten Veröffentlichungen scrollen",
     },
     albums: {
@@ -125,31 +130,35 @@ export const dictionaries: Record<Locale, Dictionary> = {
     about: {
       eyebrow: "Über das Label",
       statement:
-        "E63 Recordings wurde 2020 von Produzent Theo Schmitt in Frankfurt am Main gegründet.",
+        "E63 Recordings wurde 2020 von Produzent Theo Schmitt in Elsenfeld, nahe Frankfurt am Main, gegründet.",
       paragraphs: [
-        "Theo Schmitt lebt in Frankfurt am Main und wurde vom pulsierenden Nachtleben und der renommierten Techno-Kultur der Stadt geprägt. In einer stetig wachsenden Szene aus Produzent:innen und DJs bleibt Theo im Kern Produzent — sein roher Techno-Sound hat die Unterstützung führender Namen wie Maceo Plex, John Digweed und Butch gewonnen.",
-        "Sein Debütalbum „The Game“ erreichte die Beatport-Top-10, sein aktuelles Album „Intoxication“ stieg direkt auf Platz 1 der Beatport-Techno-Charts ein — und zeigt seine Bandbreite von Downtempo-Breakbeat bis zu rohem Peak-Time-Techno.",
-        "Das Label bewegt sich zwischen direkter, physischer Clubmusik und melodischer Ambient-Arbeit — immer auf der Suche nach Charakter, Spannung und einer klaren Haltung.",
+        "Theo Schmitt kommt aus Elsenfeld und wurde vom pulsierenden Nachtleben und der renommierten Techno-Kultur der Stadt Frankfurt am Main geprägt. Im Mittelpunkt stand für ihn dabei immer das Produzieren und Selektieren von Musik.",
+        "Sein Sound bewegt sich zwischen rohem, hypnotischem Techno, Breakbeat, atmosphärischen Downtempo-Produktionen und Indie Dance. Seine Musik fand Unterstützung bei Künstlern wie Sven Väth, Maceo Plex, John Digweed, Butch, Dino Lenny, Gabriel Ananda, Krystal Klear und Drumcomplex – und vielen mehr.",
+        "Sein Debütalbum „The Game“ erreichte die Beatport Top 10. Mit „Intoxication“ folgte Platz 1 der Beatport-Techno-Album-Charts.",
+        "Mit E63 Recordings führt Theo diesen Ansatz weiter: Direkte, physische Clubmusik trifft auf experimentellere und melodische Arbeiten – ohne sich auf einen bestimmten Sound festzulegen.",
       ],
     },
     artists: {
       eyebrow: "Die Artists",
-      heading: ["Zwei Artists.", "Eine Vision."],
+      heading: ["Unsere Artists.", "Unsere Vision."],
       bios: {
-        theo: "Frankfurt-Produzent mit rohem, dubgeprägtem Techno-Sound, unterstützt von Maceo Plex, John Digweed und Butch — sein Album „Intoxication“ stieg direkt auf Platz 1 der Beatport-Techno-Charts ein.",
-        joe: "Kollaborateur und Co-Artist auf der kommenden Veröffentlichung „Feel the High“ (E63NR06).",
+        theo: "Produzent aus Elsenfeld bei Frankfurt am Main. Sein Sound bewegt sich zwischen rohem, hypnotischem Techno, Breakbeat, Downtempo und Indie Dance. Seine Musik wird von Künstlern wie Sven Väth, Maceo Plex, John Digweed, Butch, Dino Lenny und Gabriel Ananda unterstützt. Sein Album „Intoxication“ erreichte Platz 1 der Beatport-Techno-Album-Charts.",
+        joe: "DJ und Artist aus der Frankfurter Szene. Seit mehreren Jahren hinter den Decks aktiv und musikalisch zwischen Techno, House, Minimal und elektronischer Clubmusik zu Hause. Gemeinsam mit Theo Schmitt entstand die „Feel the High“ EP (E63NR06) für E63 Recordings.",
       },
     },
-    demos: {
+    join: {
       eyebrow: "Demo-Einsendungen",
-      heading: ["Neues Signal", "gesucht."],
-      copy: "E63 ist an neuen Produzent:innen und Musiker:innen aus Deutschland und ganz Europa interessiert. Wir suchen fertige Musik mit klarer Identität — keine Kopien von dem, was schon funktioniert.",
-      rules: [
-        "Privater Streaming-Link",
-        "Keine Anhänge",
-        "Kurze Künstler-Vorstellung",
-        "Fertige oder nahezu fertige Musik",
+      statement: "Join E63",
+      paragraphs: [
+        "Wir suchen Musik mit Charakter. E63 ist offen für Künstler und Künstlerinnen aus Deutschland, Europa und der ganzen Welt, die ihren eigenen musikalischen Weg gehen. Keine Genregrenzen, keine Trends als Vorgabe – entscheidend ist die Musik.",
+        "Wenn du glaubst, dass dein Sound zu E63 Recordings passt, dann schick uns deine Musik per E-Mail – am besten als privaten Streaming-Link, zum Beispiel über SoundCloud. Wir freuen uns darauf, sie zu hören.",
       ],
+    },
+    demos: {
+      eyebrow: "So funktioniert’s",
+      heading: ["Für deine", "Demo:"],
+      copy: "Am liebsten hören wir deine Musik über einen privaten Streaming-Link, zum Beispiel SoundCloud. Schreib uns ein paar Worte zu dir und deinem Projekt und schick uns Musik, die schon weitgehend fertig ist. Mehr braucht es eigentlich nicht.",
+      copy2: "P.S.: Deine Follower-Zahl ist uns egal. Wenn uns deine Musik überzeugt, zählt genau das.",
       cta: "Demo einreichen ↗",
     },
     contact: {
@@ -197,13 +206,13 @@ export const dictionaries: Record<Locale, Dictionary> = {
   },
   en: {
     meta: {
-      title: "E63 Recordings — Frankfurt",
+      title: "E63 Recordings — Elsenfeld",
       description:
-        "E63 Recordings is an independent electronic music label founded in Frankfurt am Main in 2020, focused on dancefloor electronics and melodic ambient music.",
-      ogDescription: "Electronic music for the dancefloor and melodic ambient spaces.",
+        "E63 Recordings is an independent electronic music label founded in Elsenfeld in 2020, focused on the dancefloor.",
+      ogDescription: "Electronic music focused on the dancefloor",
     },
     header: {
-      tagline: "Frankfurt am Main · Est. 2020",
+      tagline: "Elsenfeld - est. 2020",
       menuOpen: "Menu",
       menuClose: "Close",
     },
@@ -218,8 +227,8 @@ export const dictionaries: Record<Locale, Dictionary> = {
       ],
     },
     hero: {
-      kicker: "Independent electronic label",
-      copy: "Electronic music for the dancefloor\nand melodic ambient spaces.",
+      kicker: "Independent electronic music label",
+      copy: "Electronic music focused on the dancefloor",
       scrollAria: "Scroll to latest release",
     },
     albums: {
@@ -230,31 +239,35 @@ export const dictionaries: Record<Locale, Dictionary> = {
     about: {
       eyebrow: "About the label",
       statement:
-        "E63 Recordings was founded by producer Theo Schmitt in Frankfurt am Main, Germany, in 2020.",
+        "E63 Recordings was founded by producer Theo Schmitt in Elsenfeld, near Frankfurt am Main, Germany, in 2020.",
       paragraphs: [
-        "Based in Frankfurt, Theo Schmitt has been shaped by the city’s vibrant nightlife and renowned techno culture. In an ever-expanding field of producers and DJs, Theo remains a producer at heart — his raw techno sound has earned support from leading names including Maceo Plex, John Digweed and Butch.",
-        "His debut album ‘The Game’ reached the Beatport Top 10, while his latest album ‘Intoxication’ went straight to Number One on Beatport’s techno chart — tracing his range from downtempo breakbeat to raw, peak-time techno.",
-        "The label moves between direct, physical club music and melodic ambient work — always looking for character, tension and a strong point of view.",
+        "Theo Schmitt comes from Elsenfeld and was shaped by the vibrant nightlife and renowned techno culture of the city of Frankfurt am Main. For him, producing and selecting music has always been at the centre of it all.",
+        "His sound moves between raw, hypnotic techno, breakbeat, atmospheric downtempo productions and indie dance. His music has found support from artists such as Sven Väth, Maceo Plex, John Digweed, Butch, Dino Lenny, Gabriel Ananda, Krystal Klear and Drumcomplex — and many more.",
+        "His debut album ‘The Game’ reached the Beatport Top 10. ‘Intoxication’ followed, going straight to Number One on the Beatport techno album charts.",
+        "With E63 Recordings, Theo continues this approach: direct, physical club music meets more experimental and melodic work — without committing to any one sound.",
       ],
     },
     artists: {
       eyebrow: "The Artists",
-      heading: ["Two artists.", "One vision."],
+      heading: ["Our Artists.", "Our Vision."],
       bios: {
-        theo: "Frankfurt-based producer known for a raw, dub-inflected techno sound backed by Maceo Plex, John Digweed and Butch — his album ‘Intoxication’ went straight to Number One on Beatport’s techno chart.",
-        joe: "Collaborator and co-artist on the upcoming release “Feel the High” (E63NR06).",
+        theo: "Producer from Elsenfeld, near Frankfurt am Main. His sound moves between raw, hypnotic techno, breakbeat, downtempo and indie dance. His music is supported by artists such as Sven Väth, Maceo Plex, John Digweed, Butch, Dino Lenny and Gabriel Ananda. His album ‘Intoxication’ reached Number One on the Beatport techno album charts.",
+        joe: "DJ and artist from the Frankfurt scene. Active behind the decks for several years, musically at home between techno, house, minimal and electronic club music. Together with Theo Schmitt, he created the ‘Feel the High’ EP (E63NR06) for E63 Recordings.",
       },
     },
-    demos: {
+    join: {
       eyebrow: "Demo submissions",
-      heading: ["New signal", "wanted."],
-      copy: "E63 is interested in new producers and musicians from Germany and across Europe. We are looking for finished music with a clear identity — not copies of what is already working.",
-      rules: [
-        "Private streaming link",
-        "No attachments",
-        "Short artist introduction",
-        "Finished or near-finished music",
+      statement: "Join E63",
+      paragraphs: [
+        "We’re looking for music with character. E63 is open to artists from Germany, Europe and around the world who follow their own musical path. No genre boundaries, no trends as a blueprint — what matters is the music.",
+        "If you think your sound fits E63 Recordings, send us your music by email — ideally as a private streaming link, for example via SoundCloud. We look forward to hearing it.",
       ],
+    },
+    demos: {
+      eyebrow: "How it works",
+      heading: ["For your", "Demo:"],
+      copy: "We’d love to hear your music via a private streaming link, for example SoundCloud. Write us a few words about you and your project, and send music that’s already largely finished. That’s really all it takes.",
+      copy2: "P.S.: We don’t care about your follower count. If your music convinces us, that’s all that matters.",
       cta: "Submit a demo ↗",
     },
     contact: {

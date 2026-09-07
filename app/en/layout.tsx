@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "E63 Recordings",
     "Theo Schmitt",
     "Techno",
-    "Frankfurt",
+    "Elsenfeld",
     "Electronic Music",
     "Record Label",
   ],

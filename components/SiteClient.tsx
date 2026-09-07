@@ -62,7 +62,6 @@ export function SiteClient({ locale }: { locale: Locale }) {
         <section className="hero sectionDark">
           <div className="heroMeta">
             <span>{dict.hero.kicker}</span>
-            <span>FRA · DE</span>
             <span>2020—∞</span>
           </div>
           <div className="heroTitleWrap" aria-label="E63 Recordings">
@@ -129,14 +128,32 @@ export function SiteClient({ locale }: { locale: Locale }) {
                   <span>{String(index + 1).padStart(2, "0")}</span>
                   <h3>{artist.name}</h3>
                   <p>{dict.artists.bios[artist.id]}</p>
+                  {artist.instagram && (
+                    <a href={artist.instagram} target="_blank" rel="noreferrer" className="artistLink">
+                      Instagram ↗
+                    </a>
+                  )}
                 </div>
               </article>
             ))}
           </div>
         </section>
 
-        <section id="demos" className="demos sectionLight">
+        <section id="join" className="about sectionAcid">
           <div className="sectionIndex">/04</div>
+          <div className="aboutGrid">
+            <p className="eyebrow">{dict.join.eyebrow}</p>
+            <div className="aboutCopy">
+              <p className="largeStatement">{dict.join.statement}</p>
+              {dict.join.paragraphs.map((paragraph) => (
+                <p key={paragraph}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="demos" className="demos sectionLight">
+          <div className="sectionIndex">/05</div>
           <div className="demoGrid">
             <div>
               <p className="eyebrow">{dict.demos.eyebrow}</p>
@@ -148,11 +165,7 @@ export function SiteClient({ locale }: { locale: Locale }) {
             </div>
             <div className="demoCopy">
               <p>{dict.demos.copy}</p>
-              <div className="demoRules">
-                {dict.demos.rules.map((rule) => (
-                  <span key={rule}>{rule}</span>
-                ))}
-              </div>
+              <p className="demoCopy__secondary">{dict.demos.copy2}</p>
               <a className="bigButton" href={`mailto:${site.email}?subject=E63%20Demo%20Submission`}>
                 {dict.demos.cta}
               </a>
@@ -161,7 +174,7 @@ export function SiteClient({ locale }: { locale: Locale }) {
         </section>
 
         <section id="contact" className="contact sectionDark">
-          <div className="sectionIndex">/05</div>
+          <div className="sectionIndex">/06</div>
           <p className="eyebrow">{dict.contact.eyebrow}</p>
           <FitText className="contactMarquee" href={`mailto:${site.email}`}>
             {dict.contact.marquee}
