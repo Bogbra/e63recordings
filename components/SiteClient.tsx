@@ -41,7 +41,7 @@ export function SiteClient({ locale }: { locale: Locale }) {
         </button>
       </header>
 
-      <nav id="site-menu" className={`siteMenu ${menuOpen ? "siteMenu--open" : ""}`} aria-hidden={!menuOpen}>
+      <nav id="site-menu" className={`siteMenu ${menuOpen ? "siteMenu--open" : ""}`} aria-hidden={!menuOpen} inert={!menuOpen}>
         <div className="siteMenuInner">
           <p className="eyebrow">{dict.menu.eyebrow}</p>
           <div className="menuLinks">

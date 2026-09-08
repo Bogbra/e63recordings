@@ -56,6 +56,16 @@ const releases: Release[] = [
   },
 ];
 
+function readableTextColor(hex: string) {
+  let c = hex.replace("#", "");
+  if (c.length === 3) c = c[0] + c[0] + c[1] + c[1] + c[2] + c[2];
+  const r = parseInt(c.substr(0, 2), 16) / 255;
+  const g = parseInt(c.substr(2, 2), 16) / 255;
+  const b = parseInt(c.substr(4, 2), 16) / 255;
+  const luminance = 0.2126 * r + 0.7152 * g + 0.0722 * b;
+  return luminance > 0.5 ? "#090909" : "#f5f4ef";
+}
+
 function drawSleeveImage(release: Release, index: number) {
   const canvas = document.createElement("canvas");
   canvas.width = 1600;
@@ -243,7 +253,12 @@ export function AlbumsShowcase({ dict }: { dict: AlbumsDict }) {
                   vinylRefs.current[i] = el;
                 }}
                 className="albums__vinyl"
-                style={{ "--vinyl-accent": item.palette[2] } as CSSProperties}
+                style={
+                  {
+                    "--vinyl-accent": item.palette[2],
+                    "--vinyl-label-fg": readableTextColor(item.palette[2]),
+                  } as CSSProperties
+                }
               >
                 <span className="albums__vinylLabel">{item.catalogue}</span>
               </div>
