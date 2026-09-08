@@ -3,7 +3,6 @@ export const site = {
   founded: "2020",
   location: "Elsenfeld, Germany",
   email: "info@e63recordings.com",
-  phone: "+49 6022 5089506",
   addressLines: ["Am Mühlweg 5", "63820 Elsenfeld", "Germany"],
   director: "Theofilos Schmitt",
   website: "e63recordings.com",

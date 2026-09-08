@@ -58,7 +58,6 @@ export function LegalPanel({ type, locale, onClose }: LegalPanelProps) {
             </p>
             <p>
               {dict.imprint.represented}: {site.director}<br />
-              {dict.imprint.phone}: <a href={`tel:${site.phone.replace(/\s/g, "")}`}>{site.phone}</a><br />
               {dict.imprint.email}: <a href={`mailto:${site.email}`}>{site.email}</a><br />
               {dict.imprint.website}: {site.website}
             </p>
