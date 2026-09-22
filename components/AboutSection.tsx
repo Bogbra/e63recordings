@@ -10,7 +10,7 @@ type AboutSectionProps = {
 export function AboutSection({ id, index, eyebrow, statement, paragraphs, ticker }: AboutSectionProps) {
   return (
     <section id={id} className="about sectionAcid">
-      <div className="sectionIndex">{index}</div>
+      <div className="sectionIndex" aria-hidden="true">{index}</div>
       <div className="aboutGrid">
         <p className="eyebrow">{eyebrow}</p>
         <div className="aboutCopy">

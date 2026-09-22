@@ -33,60 +33,68 @@ export function AlbumsShowcase({ dict }: { dict: AlbumsDict }) {
   useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-    let active = 0;
+    // gsap.matchMedia (rather than a one-time `.matches` check) also handles
+    // the OS-level setting changing live while the page is open in either
+    // direction, tearing the animation down / setting it up as needed.
+    const mm = gsap.matchMedia();
 
-    function applyLayout(position: number) {
-      const rounded = Math.round(position);
-      if (rounded !== active) {
-        active = rounded;
-        setActiveIndex(rounded);
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      let active = 0;
+
+      function applyLayout(position: number) {
+        const rounded = Math.round(position);
+        if (rounded !== active) {
+          active = rounded;
+          setActiveIndex(rounded);
+        }
+
+        releases.forEach((_, i) => {
+          const item = itemRefs.current[i];
+          const vinyl = vinylRefs.current[i];
+          if (!item || !vinyl) return;
+
+          const offset = i - position;
+          const absOffset = Math.abs(offset);
+
+          gsap.set(item, {
+            xPercent: offset * 165,
+            rotateY: gsap.utils.clamp(-55, 55, offset * -42),
+            scale: 1 - Math.min(absOffset, 1.5) * 0.14,
+            opacity: gsap.utils.clamp(0.08, 1, 1 - absOffset * 0.7),
+            zIndex: Math.round(50 - absOffset * 10),
+          });
+
+          const bump = gsap.utils.clamp(0, 1, 1 - absOffset);
+
+          gsap.set(vinyl, {
+            xPercent: bump * 55,
+            scale: 0.86 + bump * 0.05,
+            rotate: position * 300,
+            opacity: 0.3 + bump * 0.7,
+          });
+        });
       }
 
-      releases.forEach((_, i) => {
-        const item = itemRefs.current[i];
-        const vinyl = vinylRefs.current[i];
-        if (!item || !vinyl) return;
+      // The CSS-only resting state (`.albums__item:first-child` z-index, see
+      // globals.css) already shows the correct release before this runs —
+      // this just spreads the items into the 3D fan layout once GSAP is
+      // ready. It runs in an effect, i.e. after the first paint, so it must
+      // never be the thing responsible for the *correct* initial state.
+      applyLayout(0);
 
-        const offset = i - position;
-        const absOffset = Math.abs(offset);
-
-        gsap.set(item, {
-          xPercent: offset * 165,
-          rotateY: gsap.utils.clamp(-55, 55, offset * -42),
-          scale: 1 - Math.min(absOffset, 1.5) * 0.14,
-          opacity: gsap.utils.clamp(0.08, 1, 1 - absOffset * 0.7),
-          zIndex: Math.round(50 - absOffset * 10),
-        });
-
-        const bump = gsap.utils.clamp(0, 1, 1 - absOffset);
-
-        gsap.set(vinyl, {
-          xPercent: bump * 55,
-          scale: 0.86 + bump * 0.05,
-          rotate: position * 300,
-          opacity: 0.3 + bump * 0.7,
-        });
+      const trigger = ScrollTrigger.create({
+        trigger: section,
+        start: "top top",
+        end: "bottom bottom",
+        scrub: 0.4,
+        onUpdate: (self) => applyLayout(self.progress * (releases.length - 1)),
       });
-    }
 
-    // Apply the resting (scroll-progress 0) layout synchronously, right
-    // after mount, so the very first paint already shows the correct
-    // spread-out order — otherwise the items sit stacked at their default
-    // position (last one in the DOM on top) until ScrollTrigger's onUpdate
-    // fires on the next scroll/ticker frame.
-    applyLayout(0);
-
-    const trigger = ScrollTrigger.create({
-      trigger: section,
-      start: "top top",
-      end: "bottom bottom",
-      scrub: 0.4,
-      onUpdate: (self) => applyLayout(self.progress * (releases.length - 1)),
+      return () => trigger.kill();
     });
 
-    return () => trigger.kill();
+    return () => mm.revert();
   }, []);
 
   const release = releases[activeIndex];

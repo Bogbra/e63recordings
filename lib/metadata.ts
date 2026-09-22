@@ -1,23 +1,20 @@
 import type { Metadata } from "next";
 import { getDictionary, type Locale } from "@/data/i18n";
+import { LOCALE_HOME_PATHS } from "./locales";
+import { LEGAL_PATHS } from "./legalRoutes";
 
 const SITE_URL = "https://e63recordings.com";
 const SHARE_IMAGE = "/og-image.jpg";
-
-const LOCALE_PATHS: Record<Locale, string> = {
-  de: "/",
-  en: "/en/",
-};
 
 const OPENGRAPH_LOCALES: Record<Locale, string> = {
   de: "de_DE",
   en: "en_US",
 };
 
-// Shared metadata shape for both locale layouts — only the locale differs.
+// Shared metadata shape for both locale home pages — only the locale differs.
 export function buildMetadata(locale: Locale): Metadata {
   const dict = getDictionary(locale);
-  const path = LOCALE_PATHS[locale];
+  const path = LOCALE_HOME_PATHS[locale];
 
   return {
     metadataBase: new URL(SITE_URL),
@@ -34,12 +31,11 @@ export function buildMetadata(locale: Locale): Metadata {
     ],
     alternates: {
       canonical: path,
-      languages: LOCALE_PATHS,
+      languages: LOCALE_HOME_PATHS,
     },
     icons: {
       icon: "/favicon.svg",
     },
-    manifest: "/site.webmanifest",
     openGraph: {
       title: dict.meta.title,
       description: dict.meta.ogDescription,
@@ -54,6 +50,28 @@ export function buildMetadata(locale: Locale): Metadata {
       title: dict.meta.title,
       description: dict.meta.ogDescription,
       images: [SHARE_IMAGE],
+    },
+  };
+}
+
+// Shared metadata shape for the four static legal pages.
+export function buildLegalMetadata(locale: Locale, type: "imprint" | "privacy"): Metadata {
+  const dict = getDictionary(locale);
+  const path = LEGAL_PATHS[locale][type];
+  const title = type === "imprint" ? dict.legal.imprint.title : dict.legal.privacy.title;
+
+  return {
+    metadataBase: new URL(SITE_URL),
+    title: `${title} — E63 Recordings`,
+    alternates: {
+      canonical: path,
+      languages: {
+        de: LEGAL_PATHS.de[type],
+        en: LEGAL_PATHS.en[type],
+      },
+    },
+    icons: {
+      icon: "/favicon.svg",
     },
   };
 }

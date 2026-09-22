@@ -11,6 +11,7 @@ const MENU_INERT_SELECTORS = ["#top", "footer"];
 
 type HeaderDict = {
   tagline: string;
+  home: string;
   menuOpen: string;
   menuClose: string;
 };
@@ -27,6 +28,9 @@ type LangSwitchDict = {
 
 type SiteHeaderProps = {
   locale: Locale;
+  /** "#top" on the home page itself (smooth in-page scroll); the actual
+   *  locale home path ("/" or "/en/") on any other page. */
+  homeHref: string;
   headerDict: HeaderDict;
   menuDict: MenuDict;
   langSwitch: LangSwitchDict;
@@ -34,7 +38,7 @@ type SiteHeaderProps = {
   bandcamp: string;
 };
 
-export function SiteHeader({ locale, headerDict, menuDict, langSwitch, instagram, bandcamp }: SiteHeaderProps) {
+export function SiteHeader({ locale, homeHref, headerDict, menuDict, langSwitch, instagram, bandcamp }: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -54,7 +58,7 @@ export function SiteHeader({ locale, headerDict, menuDict, langSwitch, instagram
   return (
     <>
       <header className="siteHeader">
-        <a href="#top" className="brandLink" aria-label="E63 Recordings home">
+        <a href={homeHref} className="brandLink" aria-label={headerDict.home}>
           <Logo />
         </a>
         <div className="headerCenter">

@@ -58,11 +58,10 @@ Please verify:
 
 - legal operator name
 - postal address
-- phone number
 - email address
 - social links
 - Bandcamp purchase URL
-- current release and upcoming release
+- the `releases` list
 
 ## Artwork
 

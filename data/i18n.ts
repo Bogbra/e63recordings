@@ -13,6 +13,7 @@ export type Dictionary = {
   };
   header: {
     tagline: string;
+    home: string;
     menuOpen: string;
     menuClose: string;
   };
@@ -102,6 +103,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     },
     header: {
       tagline: "Elsenfeld - gegründet 2020",
+      home: "E63 Recordings – Startseite",
       menuOpen: "Menü",
       menuClose: "Schließen",
     },
@@ -209,6 +211,7 @@ export const dictionaries: Record<Locale, Dictionary> = {
     },
     header: {
       tagline: "Elsenfeld - est. 2020",
+      home: "E63 Recordings – Home",
       menuOpen: "Menu",
       menuClose: "Close",
     },

@@ -16,7 +16,7 @@ type ContactSite = {
 export function Contact({ dict, site }: { dict: ContactDict; site: ContactSite }) {
   return (
     <section id="contact" className="contact sectionDark">
-      <div className="sectionIndex">/06</div>
+      <div className="sectionIndex" aria-hidden="true">/06</div>
       <h2 className="eyebrow">{dict.eyebrow}</h2>
       <FitText className="contactMarquee" href={`mailto:${site.email}`}>
         {dict.marquee}

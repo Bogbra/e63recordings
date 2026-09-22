@@ -11,7 +11,7 @@ type DemosDict = {
 export function Demos({ dict, email }: { dict: DemosDict; email: string }) {
   return (
     <section id="demos" className="demos sectionLight">
-      <div className="sectionIndex">/05</div>
+      <div className="sectionIndex" aria-hidden="true">/05</div>
       <div className="demoGrid">
         <div>
           <p className="eyebrow">{dict.eyebrow}</p>

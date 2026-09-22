@@ -22,6 +22,7 @@ export function HomePage({ locale }: { locale: Locale }) {
       <SmoothScroll />
       <SiteHeader
         locale={locale}
+        homeHref="#top"
         headerDict={dict.header}
         menuDict={dict.menu}
         langSwitch={dict.langSwitch}
@@ -52,7 +53,7 @@ export function HomePage({ locale }: { locale: Locale }) {
         <Contact dict={dict.contact} site={site} />
       </main>
 
-      <SiteFooter locale={locale} dict={dict.footer} />
+      <SiteFooter locale={locale} footerDict={dict.footer} legalDict={dict.legal} site={site} />
     </>
   );
 }

@@ -1,45 +1,73 @@
 "use client";
 
 import { useRef, useState } from "react";
-import type { RefObject } from "react";
+import type { MouseEvent as ReactMouseEvent } from "react";
 import { Logo } from "./Logo";
 import { LegalPanel } from "./LegalPanel";
-import type { Locale } from "@/data/i18n";
+import { LEGAL_PATHS } from "@/lib/legalRoutes";
+import type { Dictionary, Locale } from "@/data/i18n";
 
-type FooterDict = {
-  imprint: string;
-  privacy: string;
+type SiteInfo = {
+  name: string;
+  addressLines: string[];
+  director: string;
+  email: string;
+  website: string;
 };
 
-export function SiteFooter({ locale, dict }: { locale: Locale; dict: FooterDict }) {
-  const [legal, setLegal] = useState<"imprint" | "privacy" | null>(null);
-  const imprintButtonRef = useRef<HTMLButtonElement>(null);
-  const privacyButtonRef = useRef<HTMLButtonElement>(null);
-  // Remembers whichever button was clicked, so LegalPanel can restore focus
-  // to it on close regardless of what `legal` has changed to by then.
-  const triggerButtonRef = useRef<HTMLButtonElement | null>(null);
+type SiteFooterProps = {
+  locale: Locale;
+  footerDict: Dictionary["footer"];
+  legalDict: Dictionary["legal"];
+  site: SiteInfo;
+};
 
-  const openLegal = (type: "imprint" | "privacy", buttonRef: RefObject<HTMLButtonElement | null>) => {
-    triggerButtonRef.current = buttonRef.current;
-    setLegal(type);
+export function SiteFooter({ locale, footerDict, legalDict, site }: SiteFooterProps) {
+  const [legal, setLegal] = useState<"imprint" | "privacy" | null>(null);
+  const imprintLinkRef = useRef<HTMLAnchorElement>(null);
+  const privacyLinkRef = useRef<HTMLAnchorElement>(null);
+  // Remembers whichever link was clicked, so LegalPanel can restore focus to
+  // it on close regardless of what `legal` has changed to by then.
+  const triggerLinkRef = useRef<HTMLAnchorElement | null>(null);
+  const paths = LEGAL_PATHS[locale];
+
+  // Real links to the static /impressum/ and /datenschutz/ pages are the
+  // baseline (work with no JS, are bookmarkable, satisfy § 5 DDG's "always
+  // reachable" requirement); JS progressively enhances the click into the
+  // slide-in dialog instead of a full navigation.
+  const openImprint = (event: ReactMouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    triggerLinkRef.current = imprintLinkRef.current;
+    setLegal("imprint");
+  };
+
+  const openPrivacy = (event: ReactMouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    triggerLinkRef.current = privacyLinkRef.current;
+    setLegal("privacy");
   };
 
   return (
     <>
       <footer className="footer">
         <Logo />
-        <span>© {new Date().getFullYear()} E63 Recordings</span>
+        <span>© E63 Recordings</span>
         <div className="footerLegal">
-          <button ref={imprintButtonRef} onClick={() => openLegal("imprint", imprintButtonRef)}>{dict.imprint}</button>
-          <button ref={privacyButtonRef} onClick={() => openLegal("privacy", privacyButtonRef)}>{dict.privacy}</button>
+          <a ref={imprintLinkRef} href={paths.imprint} onClick={openImprint}>
+            {footerDict.imprint}
+          </a>
+          <a ref={privacyLinkRef} href={paths.privacy} onClick={openPrivacy}>
+            {footerDict.privacy}
+          </a>
         </div>
       </footer>
 
       <LegalPanel
         type={legal}
-        locale={locale}
+        dict={legalDict}
+        site={site}
         onClose={() => setLegal(null)}
-        restoreFocusRef={triggerButtonRef}
+        restoreFocusRef={triggerLinkRef}
       />
     </>
   );

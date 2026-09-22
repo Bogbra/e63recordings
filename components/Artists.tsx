@@ -18,7 +18,7 @@ type ArtistsDict = {
 export function Artists({ dict, artists }: { dict: ArtistsDict; artists: Artist[] }) {
   return (
     <section id="artists" className="sound sectionDark">
-      <div className="sectionIndex">/03</div>
+      <div className="sectionIndex" aria-hidden="true">/03</div>
       <div className="sectionHead sectionHead--inverse">
         <p className="eyebrow">{dict.eyebrow}</p>
         <h2>
@@ -37,7 +37,7 @@ export function Artists({ dict, artists }: { dict: ArtistsDict; artists: Artist[
               <div className="artistPhoto">
                 {/* Decorative: the artist's name is already the heading right below. */}
                 <img src={artist.photo} alt="" loading="lazy" decoding="async" />
-                <span className="coverCode">{artist.code}</span>
+                <span className="coverCode" aria-hidden="true">{artist.code}</span>
               </div>
             ) : (
               <CoverArt code={artist.code} title={artist.name} variant={index === 0 ? "b" : "c"} />
