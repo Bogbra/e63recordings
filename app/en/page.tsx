@@ -1,5 +1,5 @@
-import { SiteClient } from "@/components/SiteClient";
+import { HomePage } from "@/components/HomePage";
 
 export default function Home() {
-  return <SiteClient locale="en" />;
+  return <HomePage locale="en" />;
 }

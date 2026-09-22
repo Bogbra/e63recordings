@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Lenis from "lenis";
+import { onSmoothScrollPause, onSmoothScrollResume } from "./smoothScrollControl";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -18,15 +19,13 @@ export function SmoothScroll() {
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
-    const stop = () => lenis.stop();
-    const start = () => lenis.start();
-    window.addEventListener("lenis:stop", stop);
-    window.addEventListener("lenis:start", start);
+    const removePauseListener = onSmoothScrollPause(() => lenis.stop());
+    const removeResumeListener = onSmoothScrollResume(() => lenis.start());
 
     return () => {
       gsap.ticker.remove(tick);
-      window.removeEventListener("lenis:stop", stop);
-      window.removeEventListener("lenis:start", start);
+      removePauseListener();
+      removeResumeListener();
       lenis.destroy();
     };
   }, []);

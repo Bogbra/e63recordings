@@ -74,7 +74,6 @@ export type Dictionary = {
       eyebrow: string;
       title: string;
       s1title: string;
-      s1body: string;
       s2title: string;
       s2body: string;
       s3title: string;
@@ -182,10 +181,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
         eyebrow: "Rechtliches / 02",
         title: "Datenschutz",
         s1title: "1. Verantwortlicher",
-        s1body: "",
         s2title: "2. Hosting und Server-Logfiles",
         s2body:
-          "Diese Website ist für statisches Hosting bei IONOS vorgesehen. Beim Aufruf können technisch notwendige Server-Logdaten verarbeitet werden, insbesondere IP-Adresse, Zeitpunkt des Zugriffs, angeforderte Datei, Referrer sowie Browser- und Betriebssysteminformationen. Die Verarbeitung dient dem sicheren und störungsfreien Betrieb der Website.",
+          "Diese Website wird als statischer Export bei IONOS gehostet. Beim Aufruf können technisch notwendige Server-Logdaten verarbeitet werden, insbesondere IP-Adresse, Zeitpunkt des Zugriffs, angeforderte Datei, Referrer sowie Browser- und Betriebssysteminformationen. Die Verarbeitung dient dem sicheren und störungsfreien Betrieb der Website.",
         s3title: "3. Cookies und Analytics",
         s3body:
           "Diese Version der Website setzt selbst keine Cookies, verwendet keine Webanalyse und bindet keine externen Audio-, Video- oder Social-Media-Player ein. Externe Plattformen werden ausschließlich über normale Links geöffnet.",
@@ -290,10 +288,9 @@ export const dictionaries: Record<Locale, Dictionary> = {
         eyebrow: "Legal / 02",
         title: "Privacy Policy",
         s1title: "1. Controller",
-        s1body: "",
         s2title: "2. Hosting and server log files",
         s2body:
-          "This website is intended for static hosting with IONOS. When you access it, technically necessary server log data may be processed, in particular IP address, time of access, requested file, referrer, and browser and operating system information. This processing serves the secure and trouble-free operation of the website.",
+          "This website is hosted with IONOS as a static export. When you access it, technically necessary server log data may be processed, in particular IP address, time of access, requested file, referrer, and browser and operating system information. This processing serves the secure and trouble-free operation of the website.",
         s3title: "3. Cookies and analytics",
         s3body:
           "This version of the website sets no cookies itself, uses no web analytics, and embeds no external audio, video, or social media players. External platforms are only opened via regular links.",

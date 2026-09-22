@@ -2,9 +2,11 @@
 
 A custom editorial one-page website for E63 Recordings, built with Next.js and TypeScript. The project is configured for static export so it can be deployed on IONOS Deploy Now or uploaded as static files to compatible IONOS webspace.
 
+![Hero section screenshot](docs/hero-screenshot.jpg)
+
 ## Stack
 
-- Next.js 16
+- Next.js 16 (requires Node.js >= 20.9.0)
 - React 19
 - TypeScript
 - Pure CSS (no UI framework)
@@ -14,7 +16,7 @@ A custom editorial one-page website for E63 Recordings, built with Next.js and T
 ## Run locally
 
 ```bash
-npm install
+npm ci
 npm run dev
 ```
 
@@ -44,7 +46,7 @@ out/
 
 ### Option B — Existing IONOS webspace
 
-1. Run `npm install` and `npm run build` locally.
+1. Run `npm ci` and `npm run build` locally.
 2. Upload the complete contents of `out/` into the web root of your domain using SFTP / Webspace Explorer.
 3. Point the domain to that directory and enable SSL.
 
@@ -58,14 +60,13 @@ Please verify:
 - postal address
 - phone number
 - email address
-- VAT / register details if applicable
 - social links
 - Bandcamp purchase URL
 - current release and upcoming release
 
 ## Artwork
 
-The release artworks in this starter are original CSS-generated visual placeholders. They do not copy artwork from the existing E63 website. Replace them with owned release covers later if desired.
+Release artwork and artist photos are real, owned assets in `public/`. There are no placeholder covers left — swap the files in `public/` and the `cover`/`photo` paths in `data/site.ts` when a new release or artist photo comes in.
 
 ## Privacy
 

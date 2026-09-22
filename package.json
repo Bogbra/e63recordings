@@ -2,11 +2,15 @@
   "name": "e63-recordings",
   "version": "1.0.0",
   "private": true,
+  "engines": {
+    "node": ">=20.9.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
-    "typecheck": "tsc --noEmit"
+    "preview": "npx serve out",
+    "typecheck": "next typegen && tsc --noEmit",
+    "lint": "eslint ."
   },
   "dependencies": {
     "gsap": "^3.15.0",
@@ -19,6 +23,8 @@
     "@types/node": "^22.0.0",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "eslint": "^9.39.5",
+    "eslint-config-next": "16.3.4",
     "typescript": "^5.9.0"
   }
 }

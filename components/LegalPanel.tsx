@@ -1,39 +1,41 @@
 "use client";
 
-import { useEffect } from "react";
-import type { MouseEvent as ReactMouseEvent } from "react";
+import { useRef } from "react";
+import type { MouseEvent as ReactMouseEvent, RefObject } from "react";
 import { site } from "@/data/site";
 import { getDictionary, type Locale } from "@/data/i18n";
+import { useOverlayChrome } from "@/hooks/useOverlayChrome";
+
+// Stable reference required by useOverlayChrome (see its inertSelectors doc).
+const LEGAL_INERT_SELECTORS = ["#top", "header", "footer"];
 
 type LegalPanelProps = {
   type: "imprint" | "privacy" | null;
   locale: Locale;
   onClose: () => void;
+  restoreFocusRef: RefObject<HTMLElement | null>;
 };
 
-export function LegalPanel({ type, locale, onClose }: LegalPanelProps) {
+export function LegalPanel({ type, locale, onClose, restoreFocusRef }: LegalPanelProps) {
   const dict = getDictionary(locale).legal;
+  const panelRef = useRef<HTMLElement>(null);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
 
-  useEffect(() => {
-    if (!type) return;
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") onClose();
-    };
-    document.documentElement.classList.add("modalOpen");
-    window.dispatchEvent(new Event("lenis:stop"));
-    window.addEventListener("keydown", onKey);
-    return () => {
-      document.documentElement.classList.remove("modalOpen");
-      window.dispatchEvent(new Event("lenis:start"));
-      window.removeEventListener("keydown", onKey);
-    };
-  }, [type, onClose]);
+  useOverlayChrome({
+    active: type !== null,
+    panelRef,
+    initialFocusRef: closeButtonRef,
+    restoreFocusRef,
+    onEscape: onClose,
+    inertSelectors: LEGAL_INERT_SELECTORS,
+  });
 
   if (!type) return null;
 
   return (
     <div className="legalBackdrop" role="presentation" onMouseDown={onClose}>
       <section
+        ref={panelRef}
         className="legalPanel"
         role="dialog"
         aria-modal="true"
@@ -41,7 +43,7 @@ export function LegalPanel({ type, locale, onClose }: LegalPanelProps) {
         data-lenis-prevent
         onMouseDown={(event: ReactMouseEvent<HTMLElement>) => event.stopPropagation()}
       >
-        <button className="legalClose" onClick={onClose} aria-label={dict.close}>
+        <button ref={closeButtonRef} className="legalClose" onClick={onClose} aria-label={dict.close}>
           ×
         </button>
 

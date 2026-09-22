@@ -23,6 +23,18 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; }
 ::selection { background: var(--acid); color: var(--ink); }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .siteHeader {
   position: fixed;
   z-index: 50;
@@ -146,6 +158,7 @@ section { position: relative; }
   margin-left: clamp(-12px, -.65vw, -6px);
 }
 .heroLine {
+  display: block;
   text-transform: uppercase;
   font-weight: 900;
 }
@@ -168,18 +181,8 @@ section { position: relative; }
 .circleLink:hover { background: var(--acid); color: var(--ink); border-color: var(--acid); transform: translateY(4px); }
 .arrowIcon { width: 1em; height: 1em; stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; vertical-align: -.125em; display: inline-block; }
 
-.latest { padding: 110px var(--pad) 0; }
 .sectionHead { display: grid; grid-template-columns: minmax(180px, .38fr) 1fr; gap: 20px; align-items: start; margin-bottom: 60px; }
 .sectionHead h2 { margin: -.08em 0 0; font-size: clamp(72px, 13vw, 190px); line-height: .82; letter-spacing: -.075em; text-transform: uppercase; }
-.releaseGrid { display: grid; grid-template-columns: .72fr 1.28fr; gap: clamp(24px, 5vw, 80px); align-items: start; }
-.releaseInfo { position: sticky; top: 90px; padding-bottom: 70px; }
-.releaseData { display: flex; justify-content: space-between; border-top: 1px solid var(--ink); padding-top: 8px; font-size: 11px; text-transform: uppercase; }
-.releaseInfo h3 { font-size: clamp(35px, 5vw, 74px); letter-spacing: -.055em; line-height: .92; margin: 60px 0 18px; }
-.releaseInfo p { max-width: 480px; font-size: clamp(18px, 1.8vw, 26px); letter-spacing: -.025em; }
-.trackList { list-style-position: inside; padding: 0; margin: 36px 0; border-top: 1px solid var(--ink); }
-.trackList li { padding: 10px 0; border-bottom: 1px solid var(--ink); }
-.textLink { display: inline-block; border-bottom: 1px solid currentColor; padding-bottom: 3px; }
-.upcomingStrip { margin: 100px calc(var(--pad) * -1) 0; padding: 14px var(--pad); display: grid; grid-template-columns: 80px 1fr auto; gap: 20px; background: var(--ink); color: #fff; text-transform: uppercase; font-size: 12px; }
 
 .coverArt {
   position: relative;
@@ -202,9 +205,8 @@ section { position: relative; }
 .artistPhoto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 22%; }
 .artistPhoto::after { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,.7) 100%); }
 
-.coverCode, .coverTitle, .coverStamp { position:absolute; z-index:2; text-transform:uppercase; font-size:11px; letter-spacing:.07em; }
+.coverCode, .coverStamp { position:absolute; z-index:2; text-transform:uppercase; font-size:11px; letter-spacing:.07em; }
 .coverCode { top:18px; left:18px; }
-.coverTitle { left:18px; bottom:18px; font-size:clamp(28px,4vw,64px); font-weight:800; letter-spacing:-.06em; line-height:.86; max-width:70%; }
 .coverStamp { right:18px; bottom:18px; writing-mode:vertical-rl; }
 
 .about { min-height: 95vh; padding: 110px var(--pad) 0; overflow: hidden; }
@@ -269,13 +271,10 @@ section { position: relative; }
   .heroLine--e63 { font-size:clamp(132px,44vw,300px); line-height:.8; letter-spacing:-.052em; }
   .heroLine--recordings { margin-top:10px; font-size:clamp(38px,13vw,90px); line-height:.84; letter-spacing:-.045em; }
   .heroBottom { align-items:flex-end; }
-  .sectionHead, .aboutGrid, .releaseGrid, .soundGrid, .demoGrid { grid-template-columns:1fr; }
+  .sectionHead, .aboutGrid, .soundGrid, .demoGrid { grid-template-columns:1fr; }
   .sectionHead { gap:35px; }
   .sectionHead h2, .demoGrid h2 { font-size:clamp(42px,10vw,120px); }
   .contactMarquee { margin:60px 0 70px; }
-  .releaseInfo { position:static; }
-  .upcomingStrip { grid-template-columns:50px 1fr; }
-  .upcomingStrip span:last-child { grid-column:2; }
   .aboutCopy .largeStatement { margin-top:35px; }
   .soundCard--offset { margin-top:60px; }
   .demoCopy { padding-top:0; }
@@ -292,8 +291,8 @@ section { position: relative; }
 }
 
 /* --------------------------------------------------------------------------
-   Pinned WebGL release gallery — inspired by the interaction pattern of the
-   reference site, rebuilt from scratch for E63 Recordings.
+   Pinned release gallery — a scroll-pinned DOM/CSS carousel driven by GSAP
+   ScrollTrigger (no WebGL/canvas), rebuilt from scratch for E63 Recordings.
    -------------------------------------------------------------------------- */
 .albums {
   --album-count: 3;
@@ -522,4 +521,39 @@ section { position: relative; }
   .albums__title span { font-size: 12px; margin-bottom: 12px; }
   .albums__num { font-size: 30px; }
   .albums__scroll { display: none; }
+  .albums__item { width: min(68vw, 320px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* The scroll-pinned 3D carousel is replaced by the plain, always-present
+     accessible heading + list below — simpler and avoids driving a large
+     scroll-linked transform animation for users who asked to avoid motion. */
+  .albums { height: auto; }
+  .albums__pin { position: static; height: auto; }
+  .albums__stage, .albums__topline, .albums__title, .albums__meta, .albums__scroll {
+    display: none;
+  }
+  .albums__a11yHeading, .albums__a11yList {
+    position: static;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+  .albums__a11yHeading {
+    padding: 90px var(--pad) 0;
+    font-size: clamp(32px, 6vw, 64px);
+    text-transform: uppercase;
+    letter-spacing: -.04em;
+  }
+  .albums__a11yList {
+    list-style: none;
+    padding: 24px var(--pad) 90px;
+    display: grid;
+    gap: 16px;
+    font-size: clamp(16px, 2vw, 22px);
+  }
 }
