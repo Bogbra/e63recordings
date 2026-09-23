@@ -28,6 +28,7 @@ export function LegalPage({ locale, type }: LegalPageProps) {
       <SiteHeader
         locale={locale}
         homeHref={LOCALE_HOME_PATHS[locale]}
+        menuBaseHref={LOCALE_HOME_PATHS[locale]}
         headerDict={dict.header}
         menuDict={dict.menu}
         langSwitch={langSwitch}

@@ -31,6 +31,10 @@ type SiteHeaderProps = {
   /** "#top" on the home page itself (smooth in-page scroll); the actual
    *  locale home path ("/" or "/en/") on any other page. */
   homeHref: string;
+  /** Prefixed to each menu item's `#anchor` href. The menu's `#latest`,
+   *  `#about`, etc. only exist on the home page, so this is "" there and
+   *  the locale home path ("/" or "/en/") anywhere else — e.g. `/#about`. */
+  menuBaseHref?: string;
   headerDict: HeaderDict;
   menuDict: MenuDict;
   langSwitch: LangSwitchDict;
@@ -38,7 +42,16 @@ type SiteHeaderProps = {
   bandcamp: string;
 };
 
-export function SiteHeader({ locale, homeHref, headerDict, menuDict, langSwitch, instagram, bandcamp }: SiteHeaderProps) {
+export function SiteHeader({
+  locale,
+  homeHref,
+  menuBaseHref = "",
+  headerDict,
+  menuDict,
+  langSwitch,
+  instagram,
+  bandcamp,
+}: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const navRef = useRef<HTMLElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
@@ -91,7 +104,7 @@ export function SiteHeader({ locale, homeHref, headerDict, menuDict, langSwitch,
             {menuDict.items.map((item, index) => (
               <a
                 key={item.href}
-                href={item.href}
+                href={`${menuBaseHref}${item.href}`}
                 onClick={closeMenu}
                 ref={index === 0 ? firstLinkRef : undefined}
               >

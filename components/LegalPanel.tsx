@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useId, useRef } from "react";
 import type { MouseEvent as ReactMouseEvent, RefObject } from "react";
 import type { Dictionary } from "@/data/i18n";
 import { useOverlayChrome } from "@/hooks/useOverlayChrome";
@@ -30,6 +30,7 @@ type LegalPanelProps = {
 // component doesn't pull the whole i18n module into the client bundle —
 // HomePage (a server component) already has the resolved locale data.
 export function LegalPanel({ type, dict, site, onClose, restoreFocusRef }: LegalPanelProps) {
+  const titleId = useId();
   const panelRef = useRef<HTMLElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -51,14 +52,14 @@ export function LegalPanel({ type, dict, site, onClose, restoreFocusRef }: Legal
         className="legalPanel"
         role="dialog"
         aria-modal="true"
-        aria-labelledby="legal-title"
+        aria-labelledby={titleId}
         data-lenis-prevent
         onMouseDown={(event: ReactMouseEvent<HTMLElement>) => event.stopPropagation()}
       >
         <button ref={closeButtonRef} className="legalClose" onClick={onClose} aria-label={dict.close}>
           ×
         </button>
-        <LegalContent type={type} dict={dict} site={site} headingLevel="h2" />
+        <LegalContent type={type} dict={dict} site={site} headingLevel="h2" titleId={titleId} />
       </section>
     </div>
   );

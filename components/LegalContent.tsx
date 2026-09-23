@@ -20,9 +20,12 @@ type LegalContentProps = {
    * this only changes semantics, never appearance.
    */
   headingLevel?: "h1" | "h2";
+  /** Only needed when a sibling element (e.g. a dialog's `aria-labelledby`)
+   *  must reference this title — omit it on the standalone static pages. */
+  titleId?: string;
 };
 
-export function LegalContent({ type, dict, site, headingLevel = "h2" }: LegalContentProps) {
+export function LegalContent({ type, dict, site, headingLevel = "h2", titleId }: LegalContentProps) {
   const TitleTag = headingLevel;
   const SectionTag = headingLevel === "h1" ? "h2" : "h3";
 
@@ -30,7 +33,7 @@ export function LegalContent({ type, dict, site, headingLevel = "h2" }: LegalCon
     return (
       <div className="legalContent">
         <p className="eyebrow">{dict.imprint.eyebrow}</p>
-        <TitleTag id="legal-title" className="legalTitle">{dict.imprint.title}</TitleTag>
+        <TitleTag id={titleId} className="legalTitle">{dict.imprint.title}</TitleTag>
         <p>{dict.imprint.intro}</p>
         <p>
           <strong>{site.name}</strong><br />
@@ -50,7 +53,7 @@ export function LegalContent({ type, dict, site, headingLevel = "h2" }: LegalCon
   return (
     <div className="legalContent">
       <p className="eyebrow">{dict.privacy.eyebrow}</p>
-      <TitleTag id="legal-title" className="legalTitle">{dict.privacy.title}</TitleTag>
+      <TitleTag id={titleId} className="legalTitle">{dict.privacy.title}</TitleTag>
       <SectionTag className="legalSectionTitle">{dict.privacy.s1title}</SectionTag>
       <p>
         {site.name}<br />

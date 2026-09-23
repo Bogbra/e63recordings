@@ -1,12 +1,28 @@
 "use client";
 
-import { CSSProperties, useEffect, useRef, useState } from "react";
+import { CSSProperties, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { releases } from "@/data/site";
 import { ArrowIcon } from "./ArrowIcon";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+function subscribeToReducedMotion(callback: () => void) {
+  const media = window.matchMedia(REDUCED_MOTION_QUERY);
+  media.addEventListener("change", callback);
+  return () => media.removeEventListener("change", callback);
+}
+
+function getReducedMotionSnapshot() {
+  return window.matchMedia(REDUCED_MOTION_QUERY).matches;
+}
+
+function getReducedMotionServerSnapshot() {
+  return false;
+}
 
 function readableTextColor(hex: string) {
   let c = hex.replace("#", "");
@@ -29,6 +45,12 @@ export function AlbumsShowcase({ dict }: { dict: AlbumsDict }) {
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
   const vinylRefs = useRef<(HTMLDivElement | null)[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
+  // Drives which markup the sr-only list renders (see below).
+  const reducedMotion = useSyncExternalStore(
+    subscribeToReducedMotion,
+    getReducedMotionSnapshot,
+    getReducedMotionServerSnapshot
+  );
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -40,7 +62,12 @@ export function AlbumsShowcase({ dict }: { dict: AlbumsDict }) {
     const mm = gsap.matchMedia();
 
     mm.add("(prefers-reduced-motion: no-preference)", () => {
-      let active = 0;
+      // -1 (not 0): forces the very first applyLayout(0) call below to run
+      // setActiveIndex(0), resyncing the text state to the freshly-applied
+      // visual layout even if `activeIndex` was left on a different release
+      // from a previous no-preference session (e.g. reduce → no-preference
+      // → reduce → no-preference while the page stayed open).
+      let active = -1;
 
       function applyLayout(position: number) {
         const rounded = Math.round(position);
@@ -103,14 +130,29 @@ export function AlbumsShowcase({ dict }: { dict: AlbumsDict }) {
   return (
     <section ref={sectionRef} className="albums" id="latest" style={sectionStyle}>
       <h2 className="sr-only albums__a11yHeading">{dict.topline}</h2>
+      {/* Non-interactive by default: a focusable-but-invisible link has no
+          visible focus indicator (a real WCAG 2.4.7 failure for sighted
+          keyboard users), so this only becomes a real link list once the
+          reduced-motion CSS makes it visible — at that point it's the only
+          way to reach each release, since `.albums__meta`'s link is
+          `display: none` in that mode (see globals.css). In normal mode,
+          the currently-active release stays reachable via the visible
+          `.albums__link` CTA below. */}
       <ul className="sr-only albums__a11yList">
-        {releases.map((item) => (
-          <li key={item.num}>
-            <a href={item.href} target="_blank" rel="noreferrer">
-              {item.artist} — {item.title} ({item.catalogue})
-            </a>
-          </li>
-        ))}
+        {releases.map((item) => {
+          const label = `${item.artist} — ${item.title} (${item.catalogue})`;
+          return (
+            <li key={item.num}>
+              {reducedMotion ? (
+                <a href={item.href} target="_blank" rel="noreferrer">
+                  {label}
+                </a>
+              ) : (
+                label
+              )}
+            </li>
+          );
+        })}
       </ul>
 
       <div className="albums__pin">
@@ -157,12 +199,18 @@ export function AlbumsShowcase({ dict }: { dict: AlbumsDict }) {
           {release.title}
         </h3>
 
-        <div className="albums__meta" aria-hidden="true">
-          <span className="albums__num">
+        <div className="albums__meta">
+          <span className="albums__num" aria-hidden="true">
             <span className="albums__num-dash">/</span>
             <span>{release.num}</span>
           </span>
-          <a href={release.href} target="_blank" rel="noreferrer" className="albums__link" tabIndex={-1}>
+          <a
+            href={release.href}
+            target="_blank"
+            rel="noreferrer"
+            className="albums__link"
+            aria-label={`${dict.link}: ${release.artist} — ${release.title}`}
+          >
             {dict.link} <ArrowIcon />
           </a>
         </div>
