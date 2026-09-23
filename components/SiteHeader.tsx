@@ -7,7 +7,12 @@ import { useOverlayChrome } from "@/hooks/useOverlayChrome";
 import type { Locale } from "@/data/i18n";
 
 // Stable reference required by useOverlayChrome (see its inertSelectors doc).
-const MENU_INERT_SELECTORS = ["#top", "footer"];
+// The header itself deliberately stays interactive (its menu button must
+// remain clickable to close the menu), but the brand link and language
+// switch sitting next to that button would otherwise stay reachable too —
+// both are inert individually so only the menu button and the menu's own
+// content are focusable while it's open.
+const MENU_INERT_SELECTORS = ["#top", "footer", ".siteHeader .brandLink", ".siteHeader .langSwitch"];
 
 type HeaderDict = {
   tagline: string;

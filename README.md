@@ -6,7 +6,7 @@ A custom editorial one-page website for E63 Recordings, built with Next.js and T
 
 ## Stack
 
-- Next.js 16 (requires Node.js >= 20.9.0)
+- Next.js 16 (requires Node.js >= 22, matching `engines` in `package.json` and CI)
 - React 19
 - TypeScript
 - Pure CSS (no UI framework)
@@ -34,6 +34,17 @@ The deployable website is generated in:
 out/
 ```
 
+## Tests
+
+```bash
+npm run lint
+npm run typecheck
+npm run build
+npm run test:e2e
+```
+
+`test:e2e` runs a Playwright suite against the actual `out/` static export (it builds and serves it automatically) — it covers the menu and legal-dialog focus/keyboard behavior, internal anchor and language-switch links across all six pages, the reduced-motion carousel fallback, and canonical/hreflang/robots metadata. All four commands run in CI on every push and PR.
+
 ## IONOS deployment
 
 ### Option A — IONOS Deploy Now / GitHub
@@ -49,6 +60,19 @@ out/
 1. Run `npm ci` and `npm run build` locally.
 2. Upload the complete contents of `out/` into the web root of your domain using SFTP / Webspace Explorer.
 3. Point the domain to that directory and enable SSL.
+
+### Hosting configuration to check before launch
+
+`output: "export"` means Next.js never sets HTTP headers at runtime — all of this is IONOS/webserver configuration, not something this codebase can set on its own:
+
+- HTTPS redirect (http:// → https://) and exactly one canonical domain variant (with vs. without `www.`)
+- HSTS
+- A Content-Security-Policy
+- `X-Content-Type-Options: nosniff`
+- A Referrer-Policy
+- A Permissions-Policy
+- Long-lived cache headers for the hashed `/_next/static/` assets (safe to cache aggressively — the filenames change on every build)
+- A real 404 response for unknown paths (not a redirect to `/`)
 
 ## Content to review before launch
 

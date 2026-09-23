@@ -55,12 +55,14 @@ export function buildMetadata(locale: Locale): Metadata {
 }
 
 // Shared metadata shape for the four static legal pages. Deliberately
-// minimal (no description/openGraph/twitter): Next.js inherits any field a
-// page doesn't set from the enclosing layout's metadata, so leaving those
-// out would otherwise leak the home page's social-share data onto a legal
-// page instead of just showing nothing. `noindex` also keeps these out of
-// search results as separate pages — an imprint/privacy page has no content
-// worth ranking on its own.
+// minimal: Next.js inherits any field a page doesn't explicitly set from the
+// enclosing layout's metadata (a shallow, per-key merge — not "unset fields
+// fall back to nothing"), so every field the home page's buildMetadata()
+// sets has to be explicitly cleared here too, or it silently leaks onto
+// these pages. `null` is the way to clear an inherited field; `undefined`/
+// omitting the key is what would trigger inheritance in the first place.
+// `noindex` also keeps these out of search results as separate pages — an
+// imprint/privacy page has no content worth ranking on its own.
 export function buildLegalMetadata(locale: Locale, type: "imprint" | "privacy"): Metadata {
   const dict = getDictionary(locale);
   const path = LEGAL_PATHS[locale][type];
@@ -69,10 +71,9 @@ export function buildLegalMetadata(locale: Locale, type: "imprint" | "privacy"):
   return {
     metadataBase: new URL(SITE_URL),
     title: `${title} — E63 Recordings`,
-    // Explicit `null` overwrites the layout's nested openGraph/twitter
-    // objects instead of merging into them (Next replaces whole nested
-    // fields per segment, it doesn't merge their inner keys) — otherwise
-    // this page would inherit the home page's og:title/og:url/etc.
+    description: null,
+    applicationName: null,
+    keywords: null,
     openGraph: null,
     twitter: null,
     robots: {

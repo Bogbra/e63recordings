@@ -35,7 +35,13 @@ export function Artists({ dict, artists }: { dict: ArtistsDict; artists: Artist[
           >
             {artist.photo ? (
               <div className="artistPhoto">
-                {/* Decorative: the artist's name is already the heading right below. */}
+                {/* Plain <img> is a deliberate choice, not an oversight: this
+                    is a static export with no image-optimization server, so
+                    next/image would only add its client-side runtime without
+                    ever being able to serve resized/reencoded variants.
+                    Layout shift is already prevented by `.artistPhoto`'s
+                    `aspect-ratio` + `position: absolute` sizing in CSS. */}
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={artist.photo} alt="" loading="lazy" decoding="async" />
                 <span className="coverCode" aria-hidden="true">{artist.code}</span>
               </div>
